@@ -34,12 +34,29 @@ def list_events():
 @click.option('--password', prompt=True, hide_input=True, confirmation_prompt=True, help='Your password')
 def create_user(username, email, password):
     """Create a new user."""
-    user = User(username=username, email=email, password_hash=password)
-    session.add(user)
-    session.commit()
-    click.echo("User created successfully.")
+    try:
+        user = User(username=username, email=email, password_hash=password)
+        session.add(user)
+        session.commit()
+        click.echo("User created successfully.")
+    except Exception as e:
+        session.rollback()
+        click.echo(f"Error creating user: {str(e)}")
+    finally:
+        session.close()
 
 @cli.command()
+def list_categories():
+    """List all categories."""
+    categories = session.query(Category).all()
+    if not categories:
+        click.echo("No categories found.")
+    else:
+        click.echo("List of categories:")
+        for category in categories:
+            click.echo(f"- {category.name} ({category.color})")
+
+@cli.command(name='create-event')
 @click.option('--title', prompt='Enter the event title', help='Event title')
 @click.option('--description', prompt='Enter event description', help='Event description')
 @click.option('--start-datetime', prompt='Enter start date and time (YYYY-MM-DD HH:MM)', help='Start date and time')
@@ -72,17 +89,6 @@ def create_event(title, description, start_datetime, end_datetime, location, use
         click.echo(f"Error creating event: {str(e)}")
     finally:
         session.close()
-
-@cli.command()
-def list_categories():
-    """List all categories."""
-    categories = session.query(Category).all()
-    if not categories:
-        click.echo("No categories found.")
-    else:
-        click.echo("List of categories:")
-        for category in categories:
-            click.echo(f"- {category.name} ({category.color})")
 
 if __name__ == '__main__':
     cli()
