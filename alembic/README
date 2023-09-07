@@ -1,0 +1,59 @@
+# Calendar/Event Planner CLI App
+
+A command-line interface (CLI) application for managing events and users in a calendar/event planner.
+
+## Features
+
+ Create, list, and manage events with details such as title, description, date, time, location, and category.
+ Create user accounts with usernames and email addresses.
+ Manage event categories.
+ Set event reminders.
+ Search for events based on various criteria.
+### tecnologies used
+Python: The core programming language used to build the CLI application.
+
+SQLite: A lightweight relational database management system used to store event and user data.
+
+SQLAlchemy: A Python SQL toolkit and Object-Relational Mapping (ORM) library used for database interaction and modeling.
+
+Click: A Python package used for creating command-line interfaces (CLIs). It simplifies the process of defining and handling command-line commands and options.
+
+
+
+## Getting Started
+
+### Prerequisites
+
+ Python 3.8+
+-SQLite database (included by default)
+
+### Installation
+
+ Clone the repository:
+
+   ```bash
+   git clone https://github.com/levina23/your-calendar-app.git
+
+### Navigate to the project directory:
+cd your-calendar-app
+
+### Install the required Python packages:
+pip install -r requirements.txt
+
+### Usage
+# Commands
+List events;
+python cli.py list-events
+python cli.py create-user
+python cli.py create-event
+python cli.py create-category
+
+### Development
+To add new commands, define functions using the @cli.command() decorator in cli.py.
+Write unit tests and integration tests using a testing framework like pytest.
+
+### Contributing
+Contributions are welcome! Please open an issue or submit a pull request for suggestions, bug reports, or code contributions.
+
+License
+This project is licensed under the MIT License.
