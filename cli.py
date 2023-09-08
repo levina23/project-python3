@@ -90,5 +90,29 @@ def create_event(title, description, start_datetime, end_datetime, location, use
     finally:
         session.close()
 
+@cli.command(name='delete-user')
+@click.option('--user-id', type=int, prompt='Enter user ID to delete', help='User ID to delete')
+def delete_user(user_id):
+    """Delete a user by user ID."""
+    user = session.query(User).filter(User.id == user_id).first()
+    if user:
+        session.delete(user)
+        session.commit()
+        click.echo(f"User with ID {user_id} deleted successfully.")
+    else:
+        click.echo(f"User with ID {user_id} not found.")
+
+@cli.command(name='delete-event')
+@click.option('--event-id', type=int, prompt='Enter event ID to delete', help='Event ID to delete')
+def delete_event(event_id):
+    """Delete an event by event ID."""
+    event = session.query(Event).filter(Event.id == event_id).first()
+    if event:
+        session.delete(event)
+        session.commit()
+        click.echo(f"Event with ID {event_id} deleted successfully.")
+    else:
+        click.echo(f"Event with ID {event_id} not found.")
+
 if __name__ == '__main__':
     cli()
